@@ -6,9 +6,19 @@ namespace CaSGenerate
 {
     class Controller
     {
-        private MainWindow _window;
-        private CaSGenerator _generator;
+        /// <summary>
+        /// Основное окно программы
+        /// </summary>
+        private readonly MainWindow _window;
+        /// <summary>
+        /// Класс для просчета значений
+        /// </summary>
+        private readonly CaSGenerator _generator;
 
+        /// <summary>
+        /// Конструктор класса Controller
+        /// </summary>
+        /// <param name="window">Ссылка на основное окно программы</param>
         public Controller(MainWindow window)
         {
             _window = window ?? throw new ArgumentNullException(nameof(window));
@@ -16,6 +26,9 @@ namespace CaSGenerate
             Initialize();
         }
 
+        /// <summary>
+        /// Инициализация всех событий в программе
+        /// </summary>
         private void Initialize()
         {
             _window.UpDownColumnButtonEvent += WindowColumnChangeValueHandler;
@@ -24,6 +37,11 @@ namespace CaSGenerate
             _window.CopyToClipboardEvent += WindowCopyToClipboardHandler;
         }
 
+        /// <summary>
+        /// Обработчик событий для события CopyToClipboardEvent (Копирования в буфер обмена)
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void WindowCopyToClipboardHandler(object sender, EventArgs e)
         {
             if (_window.Result.Text != string.Empty)
@@ -34,7 +52,12 @@ namespace CaSGenerate
             else MessageBox.Show("Окно результата пустое!", "Копирование в буфер:", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        private void ChangeNumberInWindow(TextBox tb, Button b)
+        /// <summary>
+        /// Универсальный метод для смены значений строк и колонок в текстовых полях программы 
+        /// </summary>
+        /// <param name="tb">TextBox строки или колонки</param>
+        /// <param name="b">Button, которая была нажата</param>
+        private static void ChangeNumberInWindow(TextBox tb, Button b)
         {
             int temp = int.Parse(tb.Text);
             switch (b.Tag)
@@ -45,22 +68,45 @@ namespace CaSGenerate
             tb.Text = SetZeroInNumber(temp);
         }
 
+        /// <summary>
+        /// Обработчик событий для события UpDownRowButtonEvent (Повышение или уменьшение значения строк)
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void WindowRowChangeValueHandler(object sender, EventArgs e)
         {
             ChangeNumberInWindow(_window.Row, ((Button)sender));
             GetResult();
         }
 
+        /// <summary>
+        /// Обработчик событий для события UpDownColumnButtonEvent (Повышение или уменьшение значения колонок)
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void WindowColumnChangeValueHandler(object sender, EventArgs e)
         {
             ChangeNumberInWindow(_window.Column, ((Button)sender));
             GetResult();
         }
 
+        /// <summary>
+        /// Обработчик событий для события CheckedIsCheckEvent (Включение или отключение просчета для односторонней печати)
+        /// </summary>
+        /// <param name="sender">Объект</param>
+        /// <param name="e">Событие</param>
         private void WindowCheckedChangeHandler(object sender, EventArgs e) => GetResult();
 
+        /// <summary>
+        /// Установка у цифр первого нуля до 10
+        /// </summary>
+        /// <param name="number">Значение числа</param>
+        /// <returns>Новое строковое значение числа</returns>
         private static string SetZeroInNumber(int number) => (number < 10) ? $"0{number}" : number.ToString();
 
+        /// <summary>
+        /// Запуск основного просчета групп и значений Cut And Stack
+        /// </summary>
         private void GetResult()
         {
             _generator.Column = int.Parse(_window.Column.Text);
