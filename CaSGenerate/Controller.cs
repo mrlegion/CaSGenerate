@@ -21,42 +21,25 @@ namespace CaSGenerate
             _window.UpDownRowButtonEvent += WindowRowChangeValueHandler;
         }
 
+        private void ChangeNumberInWindow(TextBox tb, Button b)
+        {
+            int temp = int.Parse(tb.Text);
+            switch (b.Tag)
+            {
+                case "Up": temp++; break;
+                case "Down": temp--; if (temp < 0) temp = 0; break;
+            }
+            tb.Text = SetZeroInNumber(temp);
+        }
+
         private void WindowRowChangeValueHandler(object sender, EventArgs e)
         {
-            int row;
-            switch (((Button)sender).Tag)
-            {
-                case "Up":
-                    row = int.Parse(_window.Row.Text);
-                    row++;
-                    _window.Row.Text = SetZeroInNumber(row);
-                    break;
-                case "Down":
-                    row = int.Parse(_window.Row.Text);
-                    row--;
-                    if (row < 0) row = 0;
-                    _window.Row.Text = SetZeroInNumber(row);
-                    break;
-            }
+            ChangeNumberInWindow(_window.Row, ((Button)sender));
         }
 
         private void WindowColumnChangeValueHandler(object sender, EventArgs e)
         {
-            int col;
-            switch (((Button)sender).Tag)
-            {
-                case "Up":
-                    col = int.Parse(_window.Column.Text);
-                    col++;
-                    _window.Column.Text = SetZeroInNumber(col);
-                    break;
-                case "Down":
-                    col = int.Parse(_window.Column.Text);
-                    col--;
-                    if (col < 0) col = 0;
-                    _window.Column.Text = SetZeroInNumber(col);
-                    break;
-            }
+            ChangeNumberInWindow(_window.Column, ((Button)sender));
         }
 
         private static string SetZeroInNumber(int number) => (number < 10) ? $"0{number}" : number.ToString();
