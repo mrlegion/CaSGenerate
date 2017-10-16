@@ -7,6 +7,7 @@ namespace CaSGenerate
         public int Column { get; set; }
         public int Row { get; set; }
         public int Group { get; set; }
+        public bool OneSideCheck { get; set; }
 
         private int[] _odd;
         private int[] _even;
@@ -15,8 +16,6 @@ namespace CaSGenerate
 
         private void FillOddEvenArrays()
         {
-            SetGroup();
-
             _odd = new int[Group];
             _even = new int[Group];
             int index = 0;
@@ -26,6 +25,13 @@ namespace CaSGenerate
                 if (i % 2 != 0) _odd[index] = i;
                 else if (i % 2 == 0) _even[index++] = i;
             }
+        }
+
+        private void FillOneSideArray()
+        {
+            _odd = new int[Group];
+            for (int i = 0; i < Group; i++)
+                _odd[i] = i + 1;
         }
 
         private void EventReversArray()
@@ -48,9 +54,20 @@ namespace CaSGenerate
 
         public string GetGenerateNumber()
         {
-            FillOddEvenArrays();
-            EventReversArray();
-            return ArrayToString(_odd) + ArrayToString(_even);
+            SetGroup();
+            string s;
+            if (OneSideCheck)
+            {
+                FillOneSideArray();
+                s = ArrayToString(_odd);
+            }
+            else
+            {
+                FillOddEvenArrays();
+                EventReversArray();
+                s = ArrayToString(_odd) + ArrayToString(_even);
+            }
+            return s;
         }
 
     }

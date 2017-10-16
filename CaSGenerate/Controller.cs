@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CaSGenerate
@@ -19,6 +20,18 @@ namespace CaSGenerate
         {
             _window.UpDownColumnButtonEvent += WindowColumnChangeValueHandler;
             _window.UpDownRowButtonEvent += WindowRowChangeValueHandler;
+            _window.CheckedIsCheckEvent += WindowCheckedChangeHandler;
+            _window.CopyToClipboardEvent += WindowCopyToClipboardHandler;
+        }
+
+        private void WindowCopyToClipboardHandler(object sender, EventArgs e)
+        {
+            if (_window.Result.Text != string.Empty)
+            {
+                Clipboard.SetText(_window.Result.Text);
+                MessageBox.Show("Результат скопирован в буфер обмена!", "Копирование в буфер:", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else MessageBox.Show("Окно результата пустое!", "Копирование в буфер:", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void ChangeNumberInWindow(TextBox tb, Button b)
@@ -44,13 +57,17 @@ namespace CaSGenerate
             GetResult();
         }
 
+        private void WindowCheckedChangeHandler(object sender, EventArgs e) => GetResult();
+
         private static string SetZeroInNumber(int number) => (number < 10) ? $"0{number}" : number.ToString();
 
         private void GetResult()
         {
             _generator.Column = int.Parse(_window.Column.Text);
             _generator.Row = int.Parse(_window.Row.Text);
+            _generator.OneSideCheck = (_window.OneSideCheck.IsChecked == true);
             _window.Result.Text = _generator.GetGenerateNumber();
+            _window.GroupLabel.Content = $"Group is Number: {((_generator.OneSideCheck) ? _generator.Group : _generator.Group * 2)}";
         }
     }
 }

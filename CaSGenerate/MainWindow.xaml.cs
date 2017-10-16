@@ -22,6 +22,8 @@ namespace CaSGenerate
     {
         public event EventHandler UpDownColumnButtonEvent = null;
         public event EventHandler UpDownRowButtonEvent = null;
+        public event EventHandler CheckedIsCheckEvent = null;
+        public event EventHandler CopyToClipboardEvent = null;
 
         public MainWindow()
         {
@@ -37,6 +39,16 @@ namespace CaSGenerate
         private void UpDownRowButton_Click(object sender, RoutedEventArgs routedEventArgs)
         {
             UpDownRowButtonEvent.Invoke(sender, routedEventArgs);
+        }
+
+        private void OnChecked(object sender, RoutedEventArgs routedEventArgs)
+        {
+            CheckedIsCheckEvent.Invoke(sender, routedEventArgs);
+        }
+
+        private void CopyToClipboard_Click(object sender, RoutedEventArgs routedEventArgs)
+        {
+            CopyToClipboardEvent.Invoke(sender, routedEventArgs);
         }
     }
 }
