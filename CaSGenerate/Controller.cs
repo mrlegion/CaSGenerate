@@ -35,13 +35,22 @@ namespace CaSGenerate
         private void WindowRowChangeValueHandler(object sender, EventArgs e)
         {
             ChangeNumberInWindow(_window.Row, ((Button)sender));
+            GetResult();
         }
 
         private void WindowColumnChangeValueHandler(object sender, EventArgs e)
         {
             ChangeNumberInWindow(_window.Column, ((Button)sender));
+            GetResult();
         }
 
         private static string SetZeroInNumber(int number) => (number < 10) ? $"0{number}" : number.ToString();
+
+        private void GetResult()
+        {
+            _generator.Column = int.Parse(_window.Column.Text);
+            _generator.Row = int.Parse(_window.Row.Text);
+            _window.Result.Text = _generator.GetGenerateNumber();
+        }
     }
 }

@@ -47,11 +47,12 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
-            <CheckBox x:Name="OneSideCheck" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5" VerticalAlignment="Center" Content="Use For One Side"></CheckBox>
+            <CheckBox x:Name="OneSideCheck" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="5" VerticalAlignment="Center" Content="Use For One Side" FontSize="14"></CheckBox>
             <Button x:Name="CopyButton01" Tag="Copy" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="5" Content="Copy to Clipboard" FontSize="14"></Button>
+            <Label x:Name="GroupLabel" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Content="Group is Number: " Margin="5 0 5 5" FontSize="14"></Label>
         </Grid>
 
         <!--Result group-->
-        <TextBox x:Name="Result" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Margin="5" Text="1 3 5 7 9 8 10 4 6 2 0" FontSize="14" FontFamily="PT Mono" Padding="5" IsReadOnly="True"></TextBox>
+        <TextBox x:Name="Result" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Margin="5" Text="" TextWrapping="Wrap" FontSize="14" FontFamily="PT Mono" Padding="5" IsReadOnly="True" TextAlignment="Justify"></TextBox>
     </Grid>
 </Window>
