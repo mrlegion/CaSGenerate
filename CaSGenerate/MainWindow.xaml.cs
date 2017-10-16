@@ -20,9 +20,23 @@ namespace CaSGenerate
     /// </summary>
     public partial class MainWindow : Window
     {
+        public event EventHandler UpDownColumnButtonEvent = null;
+        public event EventHandler UpDownRowButtonEvent = null;
+
         public MainWindow()
         {
             InitializeComponent();
+            new Controller(this);
+        }
+
+        private void UpDownColumnButton_Click(object sender, RoutedEventArgs routedEventArgs)
+        {
+            UpDownColumnButtonEvent.Invoke(sender, routedEventArgs);
+        }
+
+        private void UpDownRowButton_Click(object sender, RoutedEventArgs routedEventArgs)
+        {
+            UpDownRowButtonEvent.Invoke(sender, routedEventArgs);
         }
     }
 }

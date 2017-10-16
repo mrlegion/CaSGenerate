@@ -1,0 +1,6 @@
+﻿namespace CaSGenerate
+{
+    class CaSGenerator
+    {
+    }
+}
