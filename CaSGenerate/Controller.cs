@@ -35,6 +35,18 @@ namespace CaSGenerate
             _window.UpDownRowButtonEvent += WindowRowChangeValueHandler;
             _window.CheckedIsCheckEvent += WindowCheckedChangeHandler;
             _window.CopyToClipboardEvent += WindowCopyToClipboardHandler;
+            _window.ResetNumberOnTextBox += WindowResetNumberOnTextBoxHandler;
+        }
+
+        /// <summary>
+        /// Оброботчик события двойного нажания на поле Колонки или Строк, для их сброса на значение по-умолчанию
+        /// </summary>
+        /// <param name="sender">Объект, вызывающий событие</param>
+        /// <param name="e">Событие</param>
+        private void WindowResetNumberOnTextBoxHandler(object sender, EventArgs e)
+        {
+            if (sender is TextBox s) s.Text = SetZeroInNumber(1);
+            GetResult();
         }
 
         /// <summary>

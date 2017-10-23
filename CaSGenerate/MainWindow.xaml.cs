@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace CaSGenerate
 {
@@ -24,6 +25,10 @@ namespace CaSGenerate
         /// Событие для кнопки копирования в буфер обмен
         /// </summary>
         public event EventHandler CopyToClipboardEvent = null;
+        /// <summary>
+        /// Событие двойного клика для сброса значений текстового поля колонок и сток
+        /// </summary>
+        public event EventHandler ResetNumberOnTextBox = null;
 
         /// <summary>
         /// Конструтор основного окна
@@ -72,6 +77,16 @@ namespace CaSGenerate
         private void CopyToClipboard_Click(object sender, RoutedEventArgs routedEventArgs)
         {
             CopyToClipboardEvent.Invoke(sender, routedEventArgs);
+        }
+
+        /// <summary>
+        /// Оброботчик события двойного нажания на поле Колонки или Строк, для их сброса на значение по-умолчанию
+        /// </summary>
+        /// <param name="sender">Объект, вызывающий событие</param>
+        /// <param name="e">Событие</param>
+        private void ResetNumberInTextBox(object sender, MouseButtonEventArgs e)
+        {
+            ResetNumberOnTextBox.Invoke(sender, e);
         }
     }
 }
