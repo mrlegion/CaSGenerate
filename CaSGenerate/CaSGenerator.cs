@@ -106,7 +106,7 @@ namespace CaSGenerate
                 EventReversArray();
                 s = ArrayToString(_odd) + ArrayToString(_even);
             }
-            return s;
+            return s.TrimEnd(new[] { ' ' });
         }
 
     }

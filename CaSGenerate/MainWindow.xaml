@@ -52,6 +52,15 @@
         </Grid>
 
         <!--Result group-->
-        <TextBox x:Name="Result" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Margin="5" Text="" TextWrapping="Wrap" FontSize="14" FontFamily="PT Mono" Padding="5" IsReadOnly="True" TextAlignment="Justify"></TextBox>
+        <Grid Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="3" Margin="5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="Result" Grid.Column="0" Grid.Row="0" Text="" TextWrapping="Wrap" FontSize="14" FontFamily="PT Mono" Padding="5" IsReadOnly="True" TextAlignment="Justify"></TextBox>
+            <Label x:Name="InfoLabel" Grid.Column="0" Grid.Row="1"/>
+        </Grid>
     </Grid>
 </Window>

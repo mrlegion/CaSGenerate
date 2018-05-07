@@ -59,7 +59,7 @@ namespace CaSGenerate
             if (_window.Result.Text != string.Empty)
             {
                 Clipboard.SetText(_window.Result.Text);
-                MessageBox.Show("Результат скопирован в буфер обмена!", "Копирование в буфер:", MessageBoxButton.OK, MessageBoxImage.Information);
+                _window.InfoLabel.Content = "Результат скопирован в буфер";
             }
             else MessageBox.Show("Окно результата пустое!", "Копирование в буфер:", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -87,6 +87,8 @@ namespace CaSGenerate
         /// <param name="e">Событие</param>
         private void WindowRowChangeValueHandler(object sender, EventArgs e)
         {
+            if (_window.InfoLabel.Content != null) _window.InfoLabel.Content = "";
+
             ChangeNumberInWindow(_window.Row, ((Button)sender));
             GetResult();
         }
@@ -98,6 +100,7 @@ namespace CaSGenerate
         /// <param name="e">Событие</param>
         private void WindowColumnChangeValueHandler(object sender, EventArgs e)
         {
+            if ( _window.InfoLabel.Content != null ) _window.InfoLabel.Content = "";
             ChangeNumberInWindow(_window.Column, ((Button)sender));
             GetResult();
         }
@@ -107,7 +110,11 @@ namespace CaSGenerate
         /// </summary>
         /// <param name="sender">Объект</param>
         /// <param name="e">Событие</param>
-        private void WindowCheckedChangeHandler(object sender, EventArgs e) => GetResult();
+        private void WindowCheckedChangeHandler(object sender, EventArgs e)
+        {
+            if (_window.InfoLabel.Content != null) _window.InfoLabel.Content = "";
+            GetResult();
+        }
 
         /// <summary>
         /// Установка у цифр первого нуля до 10
