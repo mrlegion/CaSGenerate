@@ -1,0 +1,99 @@
+﻿<Window x:Class="NewGaSApp.MainWindow"
+        x:Name="Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        xmlns:local="clr-namespace:NewGaSApp"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="{Binding Title}" Height="550" Width="350">
+    <i:Interaction.Behaviors>
+        <local:MainWindowBehaviors/>
+    </i:Interaction.Behaviors>
+    <Grid>
+
+        <Border Background="{DynamicResource MaterialDesignPaper}"
+                x:Name="Root"
+                Margin="40">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Vertical" Grid.Row="1"
+                                Margin="10">
+                        <CheckBox Content="Раскладка для одной стороны"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 10">
+                            <TextBlock Text="Общее количество групп: "
+                                       FontWeight="SemiBold"/>
+                            <TextBlock Text="0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <TextBox TextWrapping="Wrap" 
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             TextAlignment="Left"
+                             AcceptsReturn="True"
+                             Grid.Row="2"
+                             md:HintAssist.Hint="Результат:"
+                             Margin="10 5"
+                             Text="1 3 2 4"/>
+                </Grid>
+
+                <Grid Grid.Row="0" Background="{StaticResource MaterialDesignPaper}">
+                    <Grid.Effect>
+                        <DropShadowEffect BlurRadius="15"
+                                          Opacity=".25"
+                                          Direction="10"
+                                          ShadowDepth="0"/>
+                    </Grid.Effect>
+                    <i:Interaction.Behaviors>
+                        <local:DragBehavior/>
+                    </i:Interaction.Behaviors>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" 
+                                Margin="8 5"
+                                Grid.Column="0">
+                        <md:PackIcon Kind="Application"
+                                     VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding Title}"
+                                   FontSize="12"
+                                   Margin="5 0"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button Style="{StaticResource MaterialDesignToolButton}"
+                            Grid.Column="1"
+                            Padding="10 0"
+                            Command="{Binding ExitCommand}">
+                        <md:PackIcon Kind="Close" />
+                    </Button>
+                </Grid>
+
+                
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
