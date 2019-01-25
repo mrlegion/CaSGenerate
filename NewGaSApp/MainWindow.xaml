@@ -15,6 +15,7 @@
         AllowsTransparency="True"
         WindowStyle="None"
         Background="Transparent"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         Title="{Binding Title}" Height="550" Width="350">
     <i:Interaction.Behaviors>
@@ -25,6 +26,36 @@
         <Border Background="{DynamicResource MaterialDesignPaper}"
                 x:Name="Root"
                 Margin="40">
+            <Border.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding CopyToCommand, Mode=OneWay}">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon Kind="ContentCopy" />
+                                <TextBlock Text="Копировать" Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Command="{Binding ResetCommand, Mode=OneWay}">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon Kind="PasswordReset" />
+                                <TextBlock Text="Сброс" Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Command="{Binding ExitCommand}">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <md:PackIcon Kind="ExitToApp" />
+                                <TextBlock Text="Закрыть" Margin="5 0 0 0"/>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
+                </ContextMenu>
+            </Border.ContextMenu>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -38,26 +69,99 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
+                    <Grid Grid.Row="0"
+                          Margin="0 20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0">
+                            <StackPanel>
+                                <TextBlock Text="Колонки"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Margin="0 0 0 5"/>
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" Tag="Up" Height="40">
+                                    <i:Interaction.Behaviors>
+                                        <local:DicrementAndIncrimentButtonClickBehavior/>
+                                    </i:Interaction.Behaviors>
+                                    <md:PackIcon Kind="Plus"/>
+                                </Button>
+                                <TextBox Text="{Binding Columns, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         IsReadOnly="True"
+                                         FontSize="24"
+                                         md:TextFieldAssist.DecorationVisibility="Hidden"
+                                         BorderBrush="Transparent"
+                                         HorizontalContentAlignment="Center"/>
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" Tag="Down" Height="40">
+                                    <i:Interaction.Behaviors>
+                                        <local:DicrementAndIncrimentButtonClickBehavior/>
+                                    </i:Interaction.Behaviors>
+                                    <md:PackIcon Kind="Minus" />
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1">
+                            <StackPanel>
+                                <TextBlock Text="Строки"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Margin="0 0 0 5"/>
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" Tag="Up" Height="40">
+                                    <i:Interaction.Behaviors>
+                                        <local:DicrementAndIncrimentButtonClickBehavior/>
+                                    </i:Interaction.Behaviors>
+                                    <md:PackIcon Kind="Plus"/>
+                                </Button>
+                                <TextBox Text="{Binding Rows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         IsReadOnly="True"
+                                         FontSize="24"
+                                         md:TextFieldAssist.DecorationVisibility="Hidden"
+                                         BorderBrush="Transparent"
+                                         HorizontalContentAlignment="Center"/>
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" Tag="Down" Height="40">
+                                    <i:Interaction.Behaviors>
+                                        <local:DicrementAndIncrimentButtonClickBehavior/>
+                                    </i:Interaction.Behaviors>
+                                    <md:PackIcon Kind="Minus" />
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
                     <StackPanel Orientation="Vertical" Grid.Row="1"
                                 Margin="10">
-                        <CheckBox Content="Раскладка для одной стороны"/>
+                        <CheckBox Content="Раскладка для одной стороны" IsChecked="{Binding IsDoubleSide, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel Orientation="Horizontal" Margin="0 10">
                             <TextBlock Text="Общее количество групп: "
                                        FontWeight="SemiBold"/>
-                            <TextBlock Text="0"/>
+                            <TextBlock Text="{Binding Groups, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <TextBox TextWrapping="Wrap" 
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             TextAlignment="Left"
-                             AcceptsReturn="True"
-                             Grid.Row="2"
-                             md:HintAssist.Hint="Результат:"
-                             Margin="10 5"
-                             Text="1 3 2 4"/>
+                    <DockPanel Grid.Row="2">
+                        <TextBox TextWrapping="Wrap" 
+                                 DockPanel.Dock="Top"
+                                 VerticalAlignment="Top"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 TextAlignment="Left"
+                                 AcceptsReturn="True"
+                                 md:HintAssist.Hint="Результат вычисления:"
+                                 md:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderBrush="Transparent"
+                                 Margin="10 5"
+                                 IsReadOnly="True"
+                                 Text="{Binding Result}">
+                            <i:Interaction.Behaviors>
+                                <local:TextBoxClickSelectBehavior/>
+                            </i:Interaction.Behaviors>
+                        </TextBox>
+                    </DockPanel>
+                    
                 </Grid>
 
+                <!--верхняя строка приложения-->
                 <Grid Grid.Row="0" Background="{StaticResource MaterialDesignPaper}">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="15"

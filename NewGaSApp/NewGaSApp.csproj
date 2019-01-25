@@ -76,9 +76,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DicrementAndIncrimentButtonClickBehavior.cs" />
     <Compile Include="DragBehavior.cs" />
     <Compile Include="MainWindowBehaviors.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="TextBoxClickSelectBehavior.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
