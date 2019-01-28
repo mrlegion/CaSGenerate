@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Text;
+using System.Windows;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -45,7 +46,7 @@ namespace NewGaSApp
             set
             {
                 Set(ColumnsPropertyName, ref _columns, value);
-                UpdateGroupNumber();
+                Calculate();
             }
         }
 
@@ -55,7 +56,7 @@ namespace NewGaSApp
             set
             {
                 Set(RowsPropertyName, ref _rows, value);
-                UpdateGroupNumber();
+                Calculate();
             }
         }
 
@@ -77,7 +78,7 @@ namespace NewGaSApp
             set
             {
                 Set(IsDoubleSidePropertyName, ref _isDoubleSide, value);
-                UpdateGroupNumber();
+                Calculate();
             }
         }
 
@@ -136,6 +137,20 @@ namespace NewGaSApp
         {
             int g = Columns * Rows;
             Groups = (IsDoubleSide) ? g * 2 : g;
+        }
+
+        private void T_GenerateSingleArray()
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i <= Groups; ++i)
+                sb.Append($"{i} ");
+            Result = sb.ToString().TrimEnd(' ');
+        }
+
+        private void Calculate()
+        {
+            UpdateGroupNumber();
+            T_GenerateSingleArray();
         }
         #endregion
 
