@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interactivity;
 using System.Windows.Media;
 
@@ -28,7 +29,18 @@ namespace NewGaSApp
                     {
                         string command = AssociatedObject.Tag.ToString().ToLower();
                         int value = Int32.Parse(tb.Text);
-                        value = (command == "up") ? value + 1 : (command == "down") ? value - 1 : value;
+
+                        int count;
+
+                        if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                            count = 10;
+                        else if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                            count = 5;
+                        else count = 1;
+
+                        count = (command == "down") ? count * -1 : count;
+
+                        value += count;
                         value = (value < 0) ? 0 : value;
                         tb.Text = value.ToString();
                     }

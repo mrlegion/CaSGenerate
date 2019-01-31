@@ -1,5 +1,8 @@
 ﻿using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -15,7 +18,7 @@ namespace NewGaSApp
         private int _rows;
         private int _groups;
         private string _result;
-        private bool _isDoubleSide;
+        private bool _isOneSide;
         private RelayCommand _resetCommand;
         private RelayCommand _copyToCommand;
 
@@ -32,7 +35,7 @@ namespace NewGaSApp
         public const string RowsPropertyName = "Rows";
         public const string ResultPropertyName = "Result";
         public const string GroupsPropertyName = "Groups";
-        public const string IsDoubleSidePropertyName = "IsDoubleSide";
+        public const string IsOneSidePropertyName = "IsOneSide";
 
         public string Title
         {
@@ -72,12 +75,12 @@ namespace NewGaSApp
             set { Set(ResultPropertyName, ref _result, value); }
         }
 
-        public bool IsDoubleSide
+        public bool IsOneSide
         {
-            get { return _isDoubleSide; }
+            get { return _isOneSide; }
             set
             {
-                Set(IsDoubleSidePropertyName, ref _isDoubleSide, value);
+                Set(IsOneSidePropertyName, ref _isOneSide, value);
                 Calculate();
             }
         }
@@ -130,28 +133,38 @@ namespace NewGaSApp
             Columns = 0;
             Rows = 0;
             Result = "";
-            IsDoubleSide = false;
+            IsOneSide = false;
         }
 
         private void UpdateGroupNumber()
         {
             int g = Columns * Rows;
-            Groups = (IsDoubleSide) ? g * 2 : g;
+            Groups = (IsOneSide) ? g : g * 2;
         }
 
-        private void T_GenerateSingleArray()
+        private void SingleArray()
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 1; i <= Groups; ++i)
                 sb.Append($"{i} ");
-            Result = sb.ToString().TrimEnd(' ');
+            string s = sb.ToString().TrimEnd(' ');
+            string result = s;
+            if (s.Length > 200)
+            {
+                result = s.Substring(0, 200);
+                result += " ...";
+            }
+            Result = result;
         }
 
         private void Calculate()
         {
             UpdateGroupNumber();
-            T_GenerateSingleArray();
+            if (Groups == 0) return;
+            Thread thread = new Thread(new ThreadStart(SingleArray));
+            thread.Start();
         }
+
         #endregion
 
         #region Exceptions classes

@@ -66,7 +66,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0"
@@ -132,7 +132,7 @@
 
                     <StackPanel Orientation="Vertical" Grid.Row="1"
                                 Margin="10">
-                        <CheckBox Content="Раскладка для одной стороны" IsChecked="{Binding IsDoubleSide, UpdateSourceTrigger=PropertyChanged}"/>
+                        <CheckBox Content="Раскладка для одной стороны" IsChecked="{Binding IsOneSide, UpdateSourceTrigger=PropertyChanged}"/>
                         <StackPanel Orientation="Horizontal" Margin="0 10">
                             <TextBlock Text="Общее количество групп: "
                                        FontWeight="SemiBold"/>
@@ -140,8 +140,13 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <DockPanel Grid.Row="2">
-                        <TextBox TextWrapping="Wrap" 
+                    <ScrollViewer Grid.Row="2">
+                        <TextBlock Text="{Binding Result, UpdateSourceTrigger=PropertyChanged}"
+                                   TextWrapping="Wrap"
+                                   Margin="10 0 0 10">
+
+                        </TextBlock>
+                        <!--<TextBox TextWrapping="Wrap" 
                                  DockPanel.Dock="Top"
                                  VerticalAlignment="Top"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -151,14 +156,16 @@
                                  md:TextFieldAssist.DecorationVisibility="Hidden"
                                  BorderBrush="Transparent"
                                  Margin="10 5"
+                                 VerticalScrollBarVisibility="Auto"
                                  IsReadOnly="True"
-                                 Text="{Binding Result}">
+                                 Text="{Binding Result, UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Behaviors>
                                 <local:TextBoxClickSelectBehavior/>
                             </i:Interaction.Behaviors>
-                        </TextBox>
-                    </DockPanel>
-                    
+                        </TextBox>-->
+                    </ScrollViewer>
+
+
                 </Grid>
 
                 <!--верхняя строка приложения-->
