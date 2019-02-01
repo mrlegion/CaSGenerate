@@ -2,13 +2,16 @@
 
 namespace NewGaSApp
 {
-    public class Creator
+    public interface ICreator
+    {
+        string Generate(int cols, int rows, int groups, bool isOneSide);
+    }
+
+    public class Creator : ICreator
     {
         private int[] _odd;
         private int[] _even;
-
-        private string _result;
-
+        
         private void FillArrays(int groups)
         {
             int index = 0;

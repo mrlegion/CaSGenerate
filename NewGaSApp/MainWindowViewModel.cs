@@ -22,9 +22,17 @@ namespace NewGaSApp
         private RelayCommand _resetCommand;
         private RelayCommand _copyToCommand;
 
+        private readonly ICreator _creator;
+        private string _clipboar;
+
         #endregion
 
         #region Ctor
+
+        public MainWindowViewModel(ICreator creator)
+        {
+            _creator = creator;
+        }
 
         #endregion
 
@@ -114,8 +122,7 @@ namespace NewGaSApp
             {
                 return _copyToCommand ?? (_copyToCommand = new RelayCommand(() =>
                 {
-                    Result = "Copy to clipboard";
-                    Clipboard.SetText(Result);
+                    Clipboard.SetText(_clipboar);
                 }));
             }
         }
@@ -134,6 +141,7 @@ namespace NewGaSApp
             Rows = 0;
             Result = "";
             IsOneSide = false;
+            _clipboar = "";
         }
 
         private void UpdateGroupNumber()
@@ -144,17 +152,12 @@ namespace NewGaSApp
 
         private void SingleArray()
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i <= Groups; ++i)
-                sb.Append($"{i} ");
-            string s = sb.ToString().TrimEnd(' ');
-            string result = s;
-            if (s.Length > 200)
+            _clipboar = _creator.Generate(Columns, Rows, Groups, IsOneSide);
+            if (_clipboar.Length > 200)
             {
-                result = s.Substring(0, 200);
-                result += " ...";
+                Result = $"{_clipboar.Substring(0, 200)} ...";
             }
-            Result = result;
+            Result = _clipboar;
         }
 
         private void Calculate()

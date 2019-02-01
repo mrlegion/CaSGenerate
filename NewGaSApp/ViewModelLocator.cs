@@ -11,6 +11,8 @@ namespace NewGaSApp
 
             InitViews();
             InitViewModels();
+
+            SimpleIoc.Default.Register<ICreator, Creator>();
         }
 
         public MainWindowViewModel Main => ServiceLocator.Current.GetInstance<MainWindowViewModel>();
